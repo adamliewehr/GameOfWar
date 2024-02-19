@@ -51,9 +51,9 @@ public class GameOfWarDriver {
         // check which card has a higher value
         // whichever player played the higher card, deposit the cards from the table into the winners hand
         // if a tie happens:
-            // deposit four cards from each player onto the table
-            // check the last card deposited from each player, and compare them
-            // whoever has the higher card, gets all the cards on the table
+        // deposit four cards from each player onto the table
+        // check the last card deposited from each player, and compare them
+        // whoever has the higher card, gets all the cards on the table
 
         ArrayList<Card> table = new ArrayList<Card>();
         while (player1.hasCards() && player2.hasCards()) {
@@ -98,47 +98,18 @@ public class GameOfWarDriver {
                 System.out.println("----------I declare war!----------");
                 // contents in else conditional only work if the players have more than 4 cards
                 // in the case that a war happens close to the end of the game
-                    // meaning a player has less than 4 cards
+                // meaning a player has less than 4 cards
                 // the war is different
                 if (player1.getHand().size() < 4 || player2.getHand().size() < 4){
                     // indicator that a tie happened at the end of the game
                     System.out.println("I declare war! ( < 4 )");
                     if (player1.getHand().size() < 4) { // this would mean player 1 loses the game
 
-                        if (player1.getHand().get(player1.getHand().size() - 1).getValue() < player2.getHand().get(player1.getHand().size() - 1).getValue()) {
-                            for (int i = 0; i <= player1.getHand().size() - 1; i++) {
-                                player2.addCard(player1.getHand().get(0));
-                                player1.takeTurn(player1.getHand().get(0));
-                            }
-                        }
-                        // player 1 wins the war, and the game goes on
-                        else {
-                            // something is wrong here?
-                            // I think it's when the player has only 1 card, the for loop doesn't work because it only goes through once?
-                            for (int i = 0; i <= player1.getHand().size() - 1; i++){
-                                player1.addCard(player2.getHand().get(0));
-                                player2.takeTurn(player2.getHand().get(0));
-                            }
-
-                        }
+                        player1.getHand().clear();
                     }
                     else { // if player 2's hand is less than 4
                         // player 2 loses
-                        if (player2.getHand().get(player2.getHand().size() - 1).getValue() < player1.getHand().get(player2.getHand().size() - 1).getValue()) {
-                            for (int i = 0; i <= player2.getHand().size() - 1; i++) {
-                                player1.addCard(player2.getHand().get(0));
-                                player2.takeTurn(player2.getHand().get(0));
-                            }
-                        }
-                        else {
-                            // something is wrong here?
-                            for (int i = 0; i <= player2.getHand().size() - 1; i++){
-                                player2.addCard(player1.getHand().get(0));
-                                player1.takeTurn(player1.getHand().get(0));
-                            }
-
-
-                        }
+                        player2.getHand().clear();
 
                     }
                 }
