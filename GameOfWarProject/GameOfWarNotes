@@ -1,0 +1,19 @@
+game of war
+played with one deck of 52 unique cards
+
+start by building a Card class with suit, name, and value attributes
+    1. write methods you think you need: flip?, getValue(1, 2, 3 etc.),
+    getSuit(Spades, Hearts, etc.), getName(KingOfHearts, AceOfSpades, etc.)
+
+Deck class with 52 unique cards in an ArrayList<Card>
+    1. write methods you think you need: shuffle and deal
+
+make a Player class with a name and a hand(ArrayList<Card>)
+    1. write methods you think you need: getName, takeTurn
+
+make the game class (driver/tester) meaning it has a main
+    1. makes a deck with 52 unique cards
+    2. makes two players
+    3. plays the game (where the logic is)
+    4. prints the winner
+
