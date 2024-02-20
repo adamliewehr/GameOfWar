@@ -4,16 +4,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class GameOfWarDriver {
+public class GameOfWar_AdamLiewehr {
 
     public static void main(String[] args) {
 
         // make the deck of cards
         Deck deck = new Deck();
 
+        // lists to create the card names in the deck
         ArrayList<String> suits = new ArrayList<String>(Arrays.asList("Hearts", "Diamonds", "Clubs", "Spades"));
         ArrayList<String> names = new ArrayList<String>(Arrays.asList("Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace"));
 
+        // creates the deck of cards
         int count = 0;
         for (int i=0; i<suits.size(); i++) {
             for (int j=2; j<15; j++) {
@@ -23,15 +25,15 @@ public class GameOfWarDriver {
             count = 0;
         }
 
+        // shuffle the deck
+        deck.shuffle();
+
         // create the players
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter the name of the first player: ");
         Player player1 = new Player(scan.next());
         System.out.println("Enter the name of the second player: ");
         Player player2 = new Player(scan.next());
-
-        // shuffle the deck
-        deck.shuffle();
 
         // deals the cards to the players
         // deals 26 cards to player 1
@@ -46,6 +48,21 @@ public class GameOfWarDriver {
 //        System.out.println(player1.getHand().size());
 //        System.out.println(player2.getHand().size());
 
+        // plays the game by calling the playGame function. It also passes in the two players
+        playGame(player1, player2);
+
+        // check which player has an empty hand, and print the opposite players hand
+        if (player1.hasCards()) {
+            System.out.println(player1.getName() + " wins the game!");
+        }
+        else {
+            System.out.println(player2.getName() + " wins the game!");
+        }
+
+    }
+
+
+    public static void playGame(Player player1, Player player2) {
         // play the game
         // both players play one card onto the table
         // check which card has a higher value
@@ -54,11 +71,9 @@ public class GameOfWarDriver {
         // deposit four cards from each player onto the table
         // check the last card deposited from each player, and compare them
         // whoever has the higher card, gets all the cards on the table
-
         ArrayList<Card> table = new ArrayList<Card>();
         while (player1.hasCards() && player2.hasCards()) {
-
-            // for testing
+            // for testing?
             System.out.println(player1.getName() +  " has " + player1.getHand().size() + " cards.");
             System.out.println(player2.getName() +  " has " + player2.getHand().size() + " cards.");
 
@@ -74,7 +89,6 @@ public class GameOfWarDriver {
                 Card temp = player1.getHand().get(0);
                 player1.takeTurn(player1.getHand().get(0));
                 player1.addCard(temp);
-
                 player2.takeTurn(player2.getHand().get(0));
 
             }
@@ -92,33 +106,34 @@ public class GameOfWarDriver {
 
             }
 
-            // there is a tie -----------------------------
+            // ----------------------------- there is a tie -----------------------------
             else {
-                // indicator that a tie happened
-                System.out.println("----------I declare war!----------");
-                // contents in else conditional only work if the players have more than 4 cards
-                // in the case that a war happens close to the end of the game
-                // meaning a player has less than 4 cards
-                // the war is different
-                if (player1.getHand().size() < 4 || player2.getHand().size() < 4){
-                    // indicator that a tie happened at the end of the game
-                    System.out.println("I declare war! ( < 4 )");
-                    if (player1.getHand().size() < 4) { // this would mean player 1 loses the game
+                // need a while loop in case there is a double, triple, etc. war
+                boolean tie = true;
+                while(tie) {
+                    // indicator that a tie happened
+                    System.out.println("----------I declare war!----------");
+                    // contents in else conditional only work if the players have more than 4 cards
+                    // in the case that a war happens close to the end of the game
+                    // meaning a player has less than 4 cards
+                    // the war is different
+                    // if a player has less than 4 cards and enters a war, they lose
+                        // they do not have the troops to play the war, therefore they lose
+                    if (player1.getHand().size() < 4 || player2.getHand().size() < 4) {
+                        // indicator that a tie happened at the end of the game
+                        if (player1.getHand().size() < 4) { // this would mean player 1 loses the game
+                            player1.getHand().clear();
+                            tie = false;
 
-                        player1.getHand().clear();
+                        } else { // if player 2's hand is less than 4
+                            // player 2 loses
+                            player2.getHand().clear();
+                            tie = false;
+
+                        }
                     }
-                    else { // if player 2's hand is less than 4
-                        // player 2 loses
-                        player2.getHand().clear();
-
-                    }
-                }
-                // if a war happens at the start or in the middle (meaning a player has more than 4 cards)
-                else {
-                    // need a while loop in case there is a double, triple, etc. war
-                    boolean tie = true;
-                    while(tie) {
-
+                    else {
+                        // if a war happens at the start or in the middle (meaning a player has more than 4 cards)
                         // adds 4 cards from each hand onto the table
                         for (int i = 0; i < 4; i++) {
                             table.add(player1.getHand().get(0));
@@ -166,21 +181,6 @@ public class GameOfWarDriver {
 
         }
 
-        // check which player has an empty hand, and print the opposite players hand
-        if (player1.hasCards()) {
-            System.out.println(player1.getName() + " wins the game!");
-        }
-        else {
-            System.out.println(player2.getName() + " wins the game!");
-        }
-
     }
 
 }
-
-
-
-// prints out all the cards in the deck
-//        for (int i=0; i<deck.getDeck().size(); i++) {
-//            System.out.println(deck.getDeck().get(i).getName());
-//        }
