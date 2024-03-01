@@ -11,6 +11,37 @@ public class GameOfWar_AdamLiewehr {
         // make the deck of cards
         Deck deck = new Deck();
 
+        // create the players
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter the name of the first player: ");
+        Player player1 = new Player(scan.next());
+        System.out.println("Enter the name of the second player: ");
+        Player player2 = new Player(scan.next());
+
+        setUp(deck, player1, player2);
+        //         for testing
+//        System.out.println(player1.getHand().size());
+//        System.out.println(player2.getHand().size());
+        // plays the game by calling the playGame function. It also passes in the two players
+        playGame(player1, player2);
+
+        winnerCheck(player1, player2);
+
+    }
+
+    public static void winnerCheck (Player player1, Player player2) {
+        // check which player has an empty hand, and print the opposite players hand
+        if (player1.hasCards()) {
+            System.out.println(player1.getName() + " wins the game!");
+        }
+        else {
+            System.out.println(player2.getName() + " wins the game!");
+        }
+
+    }
+
+    public static void setUp(Deck deck, Player player1, Player player2) {
+
         // lists to create the card names in the deck
         ArrayList<String> suits = new ArrayList<String>(Arrays.asList("Hearts", "Diamonds", "Clubs", "Spades"));
         ArrayList<String> names = new ArrayList<String>(Arrays.asList("Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace"));
@@ -28,13 +59,6 @@ public class GameOfWar_AdamLiewehr {
         // shuffle the deck
         deck.shuffle();
 
-        // create the players
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter the name of the first player: ");
-        Player player1 = new Player(scan.next());
-        System.out.println("Enter the name of the second player: ");
-        Player player2 = new Player(scan.next());
-
         // deals the cards to the players
         // deals 26 cards to player 1
         for (int i=0; i<26; i++) {
@@ -43,20 +67,6 @@ public class GameOfWar_AdamLiewehr {
         // deals 26 cards to player 2
         for (int i=26; i<52; i++) {
             player2.addCard(deck.getDeck().get(i));
-        }
-        // for testing
-//        System.out.println(player1.getHand().size());
-//        System.out.println(player2.getHand().size());
-
-        // plays the game by calling the playGame function. It also passes in the two players
-        playGame(player1, player2);
-
-        // check which player has an empty hand, and print the opposite players hand
-        if (player1.hasCards()) {
-            System.out.println(player1.getName() + " wins the game!");
-        }
-        else {
-            System.out.println(player2.getName() + " wins the game!");
         }
 
     }
